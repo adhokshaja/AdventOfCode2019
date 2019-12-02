@@ -1,0 +1,23 @@
+{
+  "name": "adventofcode",
+  "version": "1.0.0",
+  "description": "Advent of Code 2019 Advent calendar of programming challenges",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adhokshaja/AdventOfCode2019.git"
+  },
+  "keywords": [
+    "AdventOfCode",
+    "CodingChallenges"
+  ],
+  "author": "Adhokshaja Achar Budihal Prasad",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/adhokshaja/AdventOfCode2019/issues"
+  },
+  "homepage": "https://github.com/adhokshaja/AdventOfCode2019#readme"
+}
