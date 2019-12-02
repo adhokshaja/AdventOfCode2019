@@ -1,5 +1,5 @@
 /*
- * --- Day 2: 202 Program Alarm --- 
+ * --- Day 2: 1202 Program Alarm --- 
  * https://adventofcode.com/2019/day/2
  * Part One
  * An Intcode program is a list of integers separated by commas (like 1,0,0,3,99). 
