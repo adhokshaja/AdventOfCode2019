@@ -7,3 +7,6 @@ Repository for [Advent of Code 2019](https://adventofcode.com/2019/about) Advent
 2. Day 2: **_1202 Program Alarm_**  &mdash; *[Challenge](https://adventofcode.com/2019/day/2)* &mdash; *[Code](./day2.js)* 
     - Array Equality Check
     - Switch Statements
+3. Day 3: **_Crossed Wires_**  &mdash; *[Challenge](https://adventofcode.com/2019/day/3)* &mdash; *[Code](./day3.js)* 
+    - JS Classes
+    - Kinda Sloppy Code - Brute Force - O(N^2) time complexity, can be improved
