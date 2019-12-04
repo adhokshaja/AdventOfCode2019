@@ -11,3 +11,6 @@ Repository for [Advent of Code 2019](https://adventofcode.com/2019/about) Advent
     - JS Classes
     - JS Kinda Sloppy Code - Brute Force - O(N^2) time complexity, can be improved
     - C# Tuples , Tuples Array
+
+4. Day 4: **_Secure Container_**  &mdash; *[Challenge](https://adventofcode.com/2019/day/3)* &mdash; *[JS Code](./day4.js)* &mdash; *C# Code (not available)*
+    -  Regex FTW!!!
