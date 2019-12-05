@@ -1,16 +1,5 @@
-<Query Kind="Statements">
-  <Connection>
-    <ID>a7ca8422-dae0-48a8-995e-7fc1d24669ad</ID>
-    <Persist>true</Persist>
-    <Server>fccdr-spectre.forest.usf.edu</Server>
-    <NoPluralization>true</NoPluralization>
-    <NoCapitalization>true</NoCapitalization>
-    <AlphabetizeColumns>true</AlphabetizeColumns>
-    <IsProduction>true</IsProduction>
-    <Database>metadatacatalog</Database>
-    <ShowServer>true</ShowServer>
-  </Connection>
-</Query>
+<Query Kind="Statements"/>
+
 
 var currPath = Path.GetDirectoryName(Util.CurrentQueryPath);
 var input = File.ReadAllLines($"{currPath}/../inputs/day2.txt").FirstOrDefault().Split(',').Select(i=>int.Parse(i));
