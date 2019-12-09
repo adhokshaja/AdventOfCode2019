@@ -22,3 +22,8 @@ Repository for [Advent of Code 2019](https://adventofcode.com/2019/about) Advent
     - Can be made a little more readable / code consolidation
     - This is a _"compiler"_ (may be!)
     - Custom test "programs" 
+
+6. Day 6: **_Universal Orbit Map__**  &mdash; *[Challenge](https://adventofcode.com/2019/day/6)* &mdash; *[JS Code](./day6.js)* &mdash; *C# Code (not available)*
+    - JavaScript Class
+    - JavaScript Tree Traversal
+    - CommonJS module imports/exports
