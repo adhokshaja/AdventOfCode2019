@@ -26,10 +26,12 @@ class IntCodeParser {
         this.state = state;
         this.name = name;
         this.initialState = [...state];
+        this.readHead = 0;
     }
 
     revertStateToInitial() {
         this.state = [...this.initialState];
+        this.readHead = 0;
     }
 
     /**
@@ -175,64 +177,70 @@ class IntCodeParser {
      * @param {Number} input to the program
      */
     run([...input], debug= false) {
-        let readHead = 0;
         let inputHead = 0;
         var outputs = [];
         if(debug){
-            console.log(`Running ${this.name} for input ${input}`);
+            if(this.readHead === 0){
+                console.log(`Running ${this.name} for input ${input}`);
+            }else{
+                console.log(`Continuing ${this.name} from ${this.readHead} for input ${input}`)
+            }
         }
-        while (readHead <= this.state.length) {
-            let opcode = this.state[readHead]
+        while (this.readHead <= this.state.length) {
+            let opcode = this.state[this.readHead]
             let res = {};
-            //console.log(readHead,opcode)
+            //console.log(this.readHead,opcode)
             switch (("" + opcode).padStart(2, '0').slice(-2)) {
                 case '01':
                     // Add
-                    res = this.arithLogicOps(opcode, this.state[readHead + 1], this.state[readHead + 2], this.state[readHead + 3], readHead,'add');
-                    readHead = res.next;
+                    res = this.arithLogicOps(opcode, this.state[this.readHead + 1], this.state[this.readHead + 2], this.state[this.readHead + 3], this.readHead,'add');
+                    this.readHead = res.next;
                     break;
                 case '02':
                     // Multiply
-                    res = this.arithLogicOps(opcode, this.state[readHead + 1], this.state[readHead + 2], this.state[readHead + 3], readHead,'mul');
-                    readHead = res.next;
+                    res = this.arithLogicOps(opcode, this.state[this.readHead + 1], this.state[this.readHead + 2], this.state[this.readHead + 3], this.readHead,'mul');
+                    this.readHead = res.next;
                     break;
                 case '03':
-                    if (inputHead >= input.length){
-                        console.error("Not enough Inputs");
-                        return; 
+                    if (inputHead >= input.length) {
+                        if (debug) {
+                            console.error(`Waiting for input, pasused at readHead: ${this.readHead}`);
+                        }
+                        return outputs; 
                     }
-                    var currInput = input[inputHead++];
-                    res = this.write(opcode, this.state[readHead + 1], currInput, readHead);
-                    readHead = res.next;
+                    var currInput = input[inputHead++]-0; // cast to Number
+                    res = this.write(opcode, this.state[this.readHead + 1], currInput, this.readHead);
+                    this.readHead = res.next;
                     break;
                 case '04':
-                    res = this.read(opcode, this.state[readHead + 1], readHead);
+                    res = this.read(opcode, this.state[this.readHead + 1], this.readHead);
                     outputs.push(res.value);
-                    readHead = res.next;
+                    this.readHead = res.next;
                     break;
                 case '05': // Jump True
-                    res = this.jumpOnCondition(opcode, this.state[readHead + 1], this.state[readHead + 2], readHead,true);
-                    readHead = res.next;
+                    res = this.jumpOnCondition(opcode, this.state[this.readHead + 1], this.state[this.readHead + 2], this.readHead,true);
+                    this.readHead = res.next;
                     break;
                 case '06': // Jump False
-                    res = this.jumpOnCondition(opcode, this.state[readHead + 1], this.state[readHead + 2], readHead,false);
-                    readHead = res.next;
+                    res = this.jumpOnCondition(opcode, this.state[this.readHead + 1], this.state[this.readHead + 2], this.readHead,false);
+                    this.readHead = res.next;
                     break;
                 case '07':
                     //Less than
-                    res = this.arithLogicOps(opcode, this.state[readHead + 1], this.state[readHead + 2], this.state[readHead + 3], readHead,'lt');
-                    readHead = res.next;
+                    res = this.arithLogicOps(opcode, this.state[this.readHead + 1], this.state[this.readHead + 2], this.state[this.readHead + 3], this.readHead,'lt');
+                    this.readHead = res.next;
                     break;
                 case '08':
                     //Equal
-                    res = this.arithLogicOps(opcode, this.state[readHead + 1], this.state[readHead + 2], this.state[readHead + 3], readHead,'eq');
-                    readHead = res.next;
+                    res = this.arithLogicOps(opcode, this.state[this.readHead + 1], this.state[this.readHead + 2], this.state[this.readHead + 3], this.readHead,'eq');
+                    this.readHead = res.next;
                     break;
                 case '99':
                     //Halt
+                    this.readHead = this.readHead++;
                     return outputs;
                 default:
-                    console.error(`Unknown code ${opcode} at ${readHead}`);
+                    console.error(`Unknown code ${opcode} at ${this.readHead}`);
                     return outputs;
             }
         }
