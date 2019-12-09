@@ -25,19 +25,19 @@ const runTests_P1 = () => {
 
 
     var helloWorld = new IntCodeParser([3, 0, 4, 0, 99],'Hello world');
-    console.log(helloWorld.run(5));
+    console.log(helloWorld.run([5]));
 
 
     var multiplyBy2 = new IntCodeParser([3, 0, 1002, 0, 2, 0, 4, 0, 99],'Multiply By 2');
-    console.log(multiplyBy2.run(2));
+    console.log(multiplyBy2.run([2]));
 
 
     var add12 = new IntCodeParser([3, 0, 1001, 0, 12, 0, 4, 0, 99],'Add 12');
-    console.log(add12.run(1));
+    console.log(add12.run([1]));
 
 
     var add4Mult10 = new IntCodeParser([3, 20, 1001, 20, 4, 21, 1002, 20, 20, 22, 4, 21, 4, 22, 99],'Add 4 Mul 10');
-    console.log(add4Mult10.run(5));
+    console.log(add4Mult10.run([5]));
 
 }
 
@@ -52,22 +52,22 @@ const runTests_P2 = () =>{
     var isNotZero = new IntCodeParser([3, 12, 6, 12, 15, 1, 13, 14, 13, 4, 13, 99, -1, 0, 1, 9],'Is not zero');
     console.log(isNotZero.run(1));
     isNotZero.revertStateToInitial();
-    console.log(isNotZero.run(0));
+    console.log(isNotZero.run([0]));
 
     var largeTest = new IntCodeParser([3, 21, 1008, 21, 8, 20, 1005, 20, 22, 107, 8, 21, 20, 1006, 20, 31,
         1106, 0, 36, 98, 0, 0, 1002, 21, 125, 20, 4, 20, 1105, 1, 46, 104,
         999, 1105, 1, 46, 1101, 1000, 1, 20, 4, 20, 1105, 1, 46, 98, 99],'large test');
 
-    console.log(largeTest.run(2));
+    console.log(largeTest.run([2]));
     largeTest.revertStateToInitial();
-    console.log(largeTest.run(8));
+    console.log(largeTest.run([8]));
     largeTest.revertStateToInitial();
-    console.log(largeTest.run(500));
+    console.log(largeTest.run([500]));
 
 }
 //runTests_P2();
 
 var part2 = new IntCodeParser([...input], 'D5 p2');
-console.log(part2.run(5));
+console.log(part2.run([5]));
 
 

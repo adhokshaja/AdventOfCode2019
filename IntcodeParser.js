@@ -174,8 +174,9 @@ class IntCodeParser {
      * 
      * @param {Number} input to the program
      */
-    run(input) {
+    run([...input]) {
         let readHead = 0;
+        let inputHead = 0;
         var outputs = [];
         console.log(`Running ${this.name} for input ${input}`);
 
@@ -195,7 +196,12 @@ class IntCodeParser {
                     readHead = res.next;
                     break;
                 case '03':
-                    res = this.write(opcode, this.state[readHead + 1], input, readHead);
+                    if (inputHead >= input.length){
+                        console.error("Not enough Inputs");
+                        return; 
+                    }
+                    var currInput = input[inputHead++];
+                    res = this.write(opcode, this.state[readHead + 1], currInput, readHead);
                     readHead = res.next;
                     break;
                 case '04':
