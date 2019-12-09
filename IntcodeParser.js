@@ -174,12 +174,13 @@ class IntCodeParser {
      * 
      * @param {Number} input to the program
      */
-    run([...input]) {
+    run([...input], debug= false) {
         let readHead = 0;
         let inputHead = 0;
         var outputs = [];
-        console.log(`Running ${this.name} for input ${input}`);
-
+        if(debug){
+            console.log(`Running ${this.name} for input ${input}`);
+        }
         while (readHead <= this.state.length) {
             let opcode = this.state[readHead]
             let res = {};
