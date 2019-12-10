@@ -29,3 +29,8 @@ Repository for [Advent of Code 2019](https://adventofcode.com/2019/about) Advent
 7. Day 7: **_Amplification Circuit__**  &mdash; *[Challenge](https://adventofcode.com/2019/day/7)* &mdash; *[JS Code](./day7.js)* &mdash; *C# Code (not available)*
     - JavaScript Generators
     - IntCode Updated to accept multiple inputs & wait for inputs
+
+8. Day 8: **_Space Image Format__**  &mdash; *[Challenge](https://adventofcode.com/2019/day/8)* &mdash; *[JS Code](./day8.js)* &mdash; *C# Code (not available)*
+    - ES6 Array Functions - map, reduce, filter
+    - Unicode characters subsituuted for Black and White Pixels
+    - TODO: C# / LINQPAD code ( Would be interesting to see the Image capabilities of LinqPad's Dump function)
