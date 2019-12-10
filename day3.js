@@ -5,7 +5,7 @@
  * Two wires are connected to a central port and extend outward on a grid.
  * The wires twist and turn, but the two wires occasionally cross paths. 
  * To fix the circuit, you need to find the intersection point closest to the central port.
- * Use Manhattan distance for measurement.
+ * Use Manhattan Distance for measurement.
  * While the wires do technically cross right at the central port where they both start, this point does not count, nor does a wire count as crossing with itself.
  */
 
@@ -65,7 +65,7 @@ function getIntersections(path1, path2) {
  * @param {[Point]} intersections 
  */
 const getClosestIntersection =  (intersections) => {
-    let k = intersections.sort( (a,b) => Point.distance(a) - Point.distance(b));
+    let k = intersections.sort( (a,b) => Point.ManhattanDistance(a) - Point.ManhattanDistance(b));
     return k[0];
 }
 
@@ -95,7 +95,7 @@ function part1() {
     const wire2Path = getPathFromDir(wire2);
     const intersections = getIntersections(wire1Path,wire2Path);
     const closestIntersection = getClosestIntersection(intersections);
-    console.log(Point.distance(closestIntersection));
+    console.log(Point.ManhattanDistance(closestIntersection));
     return {
         p1: wire1Path.map(x=>x.toString()),
         p2: wire2Path.map(x => x.toString()),

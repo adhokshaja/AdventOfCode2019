@@ -53,14 +53,17 @@ class Point {
         return a.x === b.x && a.y === b.y;
     }
 
+
     /**
      * Returns the Manhattan Distance between two points
-     * @param {Point} a 
+     * @param {Point} a
      * @param {Point} b Defaults to origin
      */
-    static distance(a, b = new Point()) {
-        return Math.abs(a.x - b.x) + Math.abs(a.y - b.y)
+    static ManhattanDistance(a, b = new Point()){
+        return Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
     }
+
+
 
     toString() {
         return `${this.x},${this.y}`;
