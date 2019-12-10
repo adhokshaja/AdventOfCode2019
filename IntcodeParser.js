@@ -56,7 +56,7 @@ class IntCodeParser {
             return param;
         } else if (mode === '2') {
             //Positional
-            value = this.state[param + ralativeBase];
+            value = this.state[param + this.relativeBase];
         }
         else {
             // Relative
@@ -73,10 +73,20 @@ class IntCodeParser {
      * 
      * @param {Number} index Write Location index
      * @param {Number} value Value to insert
+     * @param {string} mode Read mode : 0 = Positional, 2= Relative Mode
      */
-    writeParamValueToState(index, value) {
+    writeParamValueToState(index, value, mode = 0) {
         // Write is never in immediate mode
-        this.state[index] = value;
+        if(mode === '1'){
+            console.error('Error Writing in Immediate Mode');
+        }
+        if(mode === '2'){
+            this.state[index + this.relativeBase] = value;
+            return;
+        }else{
+            this.state[index] = value;
+            return;
+        }
     }
 
     /**
@@ -93,11 +103,6 @@ class IntCodeParser {
         const param3 = this.state[this.readHead + 3];
 
         opcode = ("" + opcode).padStart(5, '0');
-        if (opcode[0] != '0') {
-            console.log(opcode);
-            console.error('Trying to write positionally');
-        }
-
         const input1 = this.getParamValueFromState(param1, opcode[2]),
             input2 = this.getParamValueFromState(param2, opcode[1]);
         let resultValue = 0;
@@ -116,7 +121,7 @@ class IntCodeParser {
             default: break;
         }
 
-        this.writeParamValueToState(param3, resultValue);
+        this.writeParamValueToState(param3, resultValue, opcode[0]);
         this.readHead = this.readHead + 4;
         return;
     }
@@ -136,7 +141,7 @@ class IntCodeParser {
             console.error('Wrong operation save input');
             return;
         }
-        this.writeParamValueToState(param, value);
+        this.writeParamValueToState(param, value, opcode[0]);
         this.readHead = this.readHead+2;
         return;
     }
@@ -205,13 +210,7 @@ class IntCodeParser {
     run([...input], debug= false) {
         let inputHead = 0;
         var outputs = [];
-        if(debug){
-            if(this.readHead === 0){
-                console.log(`Running ${this.name} for input ${input}`);
-            }else{
-                console.log(`Continuing ${this.name} from ${this.readHead} for input ${input}`)
-            }
-        }
+        
         while (this.readHead <= this.state.length) {
             let opcode = this.state[this.readHead]
             //console.log(this.readHead,opcode)
@@ -254,6 +253,7 @@ class IntCodeParser {
                     break;
                 case '09':
                     this.updateRelativeBase(opcode);
+                    break;
                 case '99':
                     //Halt
                     this.readHead = this.readHead++;
