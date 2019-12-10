@@ -22,16 +22,18 @@ class IntCodeParser {
      * @param {[Number]} param0 Starting state of the machine
      * @param {string}  Name Name for the parser
      */
-    constructor([...state], name= "Int code Parser") {
+    constructor([...state], name= "IntCode Parser") {
         this.state = state;
         this.name = name;
         this.initialState = [...state];
         this.readHead = 0;
+        this.relativeBase = 0;
     }
 
     revertStateToInitial() {
         this.state = [...this.initialState];
         this.readHead = 0;
+        this.relativeBase = 0;
     }
 
     /**
@@ -42,17 +44,30 @@ class IntCodeParser {
     }
 
     /**
-     * 
+     * Gets the value from a param based on Instruction mode. If the value is un initialize it returns zero
      * @param {Number} param Param read from the state
-     * @param {string} mode Read mode : 0 = Positional, 1 = Immediate
+     * @param {string} mode Read mode : 0 = Positional, 1 = Immediate, 2= Relative Mode
+     * 
      */
     getParamValueFromState(param, mode = "0") {
+        let value = 0;
         if (mode === '1') {
+            // Immediate
             return param;
+        } else if (mode === '2') {
+            //Positional
+            value = this.state[param + ralativeBase];
         }
         else {
-            return this.state[param];
+            // Relative
+            value = this.state[param];
         }
+
+        if (typeof (value) === "undefined") {
+            // return a value of zero if undefined
+            value = 0;
+        }
+        return value;
     }
     /**
      * 
@@ -168,6 +183,17 @@ class IntCodeParser {
         return;
     }
 
+    updateRelativeBase(opcode){
+        const param = this.state[this.readHead + 1];
+        opcode = ("" + opcode).padStart(3, '0');
+        if (opcode.slice(-2) != "09") {
+            console.error('Wrong operation Update Rel Base');
+            return;
+        }
+        const input = this.getParamValueFromState(param, opcode[0]);
+        this.relativeBase = this.relativeBase + input;
+        this.readHead = this.readHead + 2;
+    }
 
 
 
@@ -226,6 +252,8 @@ class IntCodeParser {
                     //Equal
                     this.arithLogicOps(opcode, 'eq');
                     break;
+                case '09':
+                    this.updateRelativeBase(opcode);
                 case '99':
                     //Halt
                     this.readHead = this.readHead++;
