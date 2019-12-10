@@ -68,40 +68,42 @@ class IntCodeParser {
      * Performs Artitmetic and Logical Operations
      * *opcode 1, 2, 7, 8*
      * @param {*} opcode Operation string with read modes
-     * @param {Number} param1
-     * @param {Number} param2
-     * @param {Number} param3
-     * @param {Number} readHead Current position of the readhead
      * @param {String} op Operation to be performed - add, mul, sub, div, mod
      *  eq : equal to, lt :less than, gt:greater than, lte, gte
      */
-    arithLogicOps(opcode, param1, param2, param3, readHead, op){
+    arithLogicOps(opcode, op) {
+
+        const param1 = this.state[this.readHead + 1];
+        const param2 = this.state[this.readHead + 2];
+        const param3 = this.state[this.readHead + 3];
+
         opcode = ("" + opcode).padStart(5, '0');
         if (opcode[0] != '0') {
             console.log(opcode);
-            console.error('Trying to write positionally2')
+            console.error('Trying to write positionally');
         }
 
         const input1 = this.getParamValueFromState(param1, opcode[2]),
             input2 = this.getParamValueFromState(param2, opcode[1]);
         let resultValue = 0;
-        
-        switch(op){
+
+        switch (op) {
             case 'add': resultValue = input1 + input2; break;
             case 'sub': resultValue = input1 - input2; break;
             case 'mul': resultValue = input1 * input2; break;
             case 'div': resultValue = input1 / input2; break;
             case 'mod': resultValue = input1 % input2; break;
-            case 'lt': resultValue = input1 < input2 ? 1: 0; break;
+            case 'lt': resultValue = input1 < input2 ? 1 : 0; break;
             case 'gt': resultValue = input1 > input2 ? 1 : 0; break;
             case 'lte': resultValue = input1 <= input2 ? 1 : 0; break;
             case 'gte': resultValue = input1 >= input2 ? 1 : 0; break;
             case 'eq': resultValue = input1 === input2 ? 1 : 0; break;
-            default : break;
+            default: break;
         }
 
         this.writeParamValueToState(param3, resultValue);
-        return { next: readHead + 4 };
+        this.readHead = this.readHead + 4;
+        return;
     }
 
 
@@ -110,36 +112,35 @@ class IntCodeParser {
      * Gets an Input value and writes it to destination
      * *opcode 3*
      * @param {Number} opcode 
-     * @param {Number} param
      * @param {Number} value  - Number to be writted
-     * @param {Number} readHead Current position of the readhead
      */
-    write(opcode, param, value, readHead) {
+    write(opcode, value) {
+        const param = this.state[this.readHead+1];
         opcode = ("" + opcode).padStart(3, '0');
         if (opcode.slice(-2) != "03") {
             console.error('Wrong operation save input');
             return;
         }
         this.writeParamValueToState(param, value);
-
-        return { next: readHead + 2 };
+        this.readHead = this.readHead+2;
+        return;
     }
 
     /**
      * Reads an value from state and returns it
      * *opcode 4*
      * @param {Number} opcode
-     * @param {Number} param
-     * @param {Number} readHead Current position of the readhead
      */
-    read(opcode, param, readHead) {
+    read(opcode) {
+        const param = this.state[this.readHead + 1];
         opcode = ("" + opcode).padStart(3, '0');
         if (opcode.slice(-2) != "04") {
             console.error('Wrong operation Read');
             return;
         }
         const readValue = this.getParamValueFromState(param, opcode[0]);
-        return { next: readHead + 2, value: readValue };
+        this.readHead = this.readHead + 2;
+        return { value: readValue };
     }
 
 
@@ -149,14 +150,12 @@ class IntCodeParser {
      * Else it set read head pointer to next location
      * *opcode 5 6*
      * @param {Number} opcode
-     * @param {Number} param1 
-     * @param {Number} param2
-     * @param {Number} readHead Current position of the readhead
      * @param {Boolean} condition Contition to check fro 
      */
-    jumpOnCondition(opcode, param1, param2, readHead, condition) {
+    jumpOnCondition(opcode, condition) {
         opcode = ("" + opcode).padStart(4, '0');
-        
+        const param1 = this.state[this.readHead + 1];
+        const param2 = this.state[this.readHead + 2];
         const input1 = this.getParamValueFromState(param1, opcode[1]),
             input2 = this.getParamValueFromState(param2, opcode[0]);
         let conditionValidity = false;
@@ -165,7 +164,8 @@ class IntCodeParser {
         }else{
             conditionValidity = input1 === 0
         }
-        return { next: (conditionValidity ? input2 : readHead + 3) };
+        this.readHead = (conditionValidity ? input2 : this.readHead + 3);
+        return;
     }
 
 
@@ -188,18 +188,15 @@ class IntCodeParser {
         }
         while (this.readHead <= this.state.length) {
             let opcode = this.state[this.readHead]
-            let res = {};
             //console.log(this.readHead,opcode)
             switch (("" + opcode).padStart(2, '0').slice(-2)) {
                 case '01':
                     // Add
-                    res = this.arithLogicOps(opcode, this.state[this.readHead + 1], this.state[this.readHead + 2], this.state[this.readHead + 3], this.readHead,'add');
-                    this.readHead = res.next;
+                    this.arithLogicOps(opcode, 'add');
                     break;
                 case '02':
                     // Multiply
-                    res = this.arithLogicOps(opcode, this.state[this.readHead + 1], this.state[this.readHead + 2], this.state[this.readHead + 3], this.readHead,'mul');
-                    this.readHead = res.next;
+                    this.arithLogicOps(opcode, 'mul');
                     break;
                 case '03':
                     if (inputHead >= input.length) {
@@ -209,31 +206,25 @@ class IntCodeParser {
                         return outputs; 
                     }
                     var currInput = input[inputHead++]-0; // cast to Number
-                    res = this.write(opcode, this.state[this.readHead + 1], currInput, this.readHead);
-                    this.readHead = res.next;
+                    this.write(opcode, currInput);
                     break;
                 case '04':
-                    res = this.read(opcode, this.state[this.readHead + 1], this.readHead);
+                    let res = this.read(opcode);
                     outputs.push(res.value);
-                    this.readHead = res.next;
                     break;
                 case '05': // Jump True
-                    res = this.jumpOnCondition(opcode, this.state[this.readHead + 1], this.state[this.readHead + 2], this.readHead,true);
-                    this.readHead = res.next;
+                    this.jumpOnCondition(opcode, true);
                     break;
                 case '06': // Jump False
-                    res = this.jumpOnCondition(opcode, this.state[this.readHead + 1], this.state[this.readHead + 2], this.readHead,false);
-                    this.readHead = res.next;
+                    this.jumpOnCondition(opcode, false);
                     break;
                 case '07':
                     //Less than
-                    res = this.arithLogicOps(opcode, this.state[this.readHead + 1], this.state[this.readHead + 2], this.state[this.readHead + 3], this.readHead,'lt');
-                    this.readHead = res.next;
+                    this.arithLogicOps(opcode, 'lt');
                     break;
                 case '08':
                     //Equal
-                    res = this.arithLogicOps(opcode, this.state[this.readHead + 1], this.state[this.readHead + 2], this.state[this.readHead + 3], this.readHead,'eq');
-                    this.readHead = res.next;
+                    this.arithLogicOps(opcode, 'eq');
                     break;
                 case '99':
                     //Halt
