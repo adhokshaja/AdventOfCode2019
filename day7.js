@@ -71,7 +71,7 @@ function ResetAmplifierCircuit({ Amp_A, Amp_B, Amp_C, Amp_D, Amp_E }, [pa,pb,pc,
  * @param {Number} in_a 
  * @param {Boolean} reset 
  */
-function RunAmplifierCircuit({ Amp_A, Amp_B, Amp_C, Amp_D, Amp_E }, in_a = 0) {
+function RunAmplifierCircuitOnce({ Amp_A, Amp_B, Amp_C, Amp_D, Amp_E }, in_a = 0) {
     if(debug){
         console.log(`Running Amplifier Circuit for input ${in_a}`)
     }
@@ -83,6 +83,12 @@ function RunAmplifierCircuit({ Amp_A, Amp_B, Amp_C, Amp_D, Amp_E }, in_a = 0) {
     return out_e;
 }
 
+/**
+ * Creates and Runs the Amplifier Circuit w or w/o feedback
+ * @param {[Number]} program IntCode Software Program
+ * @param {[Number, Number, Number, Number]} phaseRange Phase Setting numbers
+ * @param {Boolean} feedback Is feedback included in the loop
+ */
 function run(program, phaseRange = [0, 1, 2, 3, 4], feedback = false) {
 
     const outputs = [];
@@ -109,7 +115,7 @@ function run(program, phaseRange = [0, 1, 2, 3, 4], feedback = false) {
         ResetAmplifierCircuit(Amplifiers, phaseSetting);
 
         // Run the Circuit Once to get the output
-        let ampOutput = RunAmplifierCircuit(Amplifiers, 0);
+        let ampOutput = RunAmplifierCircuitOnce(Amplifiers, 0);
 
         if (!feedback) {
             // if there is no feedback, we are done
@@ -126,7 +132,7 @@ function run(program, phaseRange = [0, 1, 2, 3, 4], feedback = false) {
                 i++;
                 if (debug) { console.log(`Run ${i} for ${phaseSetting.join(',')}`); }
                 last_out = ampOutput;
-                ampOutput = RunAmplifierCircuit(Amplifiers, last_out);
+                ampOutput = RunAmplifierCircuitOnce(Amplifiers, last_out);
             }
 
             outputs.push({
