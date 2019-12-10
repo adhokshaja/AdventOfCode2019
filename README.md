@@ -19,11 +19,13 @@ Repository for [Advent of Code 2019](https://adventofcode.com/2019/about) Advent
 5. Day 5: **_Sunny with a Chance of Asteroids__**  &mdash; *[Challenge](https://adventofcode.com/2019/day/5)* &mdash; *[JS Code](./day5.js)* &mdash; *C# Code (not available)*
     - JavaScript Class
     - JS testing
-    - Can be made a little more readable / code consolidation
-    - This is a _"compiler"_ (may be!)
     - Custom test "programs" 
 
 6. Day 6: **_Universal Orbit Map__**  &mdash; *[Challenge](https://adventofcode.com/2019/day/6)* &mdash; *[JS Code](./day6.js)* &mdash; *C# Code (not available)*
     - JavaScript Class
     - JavaScript Tree Traversal
     - CommonJS module imports/exports
+
+7. Day 7: **_Amplification Circuit__**  &mdash; *[Challenge](https://adventofcode.com/2019/day/7)* &mdash; *[JS Code](./day7.js)* &mdash; *C# Code (not available)*
+    - JavaScript Generators
+    - IntCode Updated to accept multiple inputs & wait for inputs
