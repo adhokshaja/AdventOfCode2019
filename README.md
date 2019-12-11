@@ -37,3 +37,7 @@ Repository for [Advent of Code 2019](https://adventofcode.com/2019/about) Advent
 
 9. Day 9: **_Sensor Boost_**  &mdash; *[Challenge](https://adventofcode.com/2019/day/9)* &mdash; *[JS Code](./day9.js)* &mdash; *C# Code (not available)*
     - Complete Intcode computer
+
+10. Day 10: **_Sensor Boost_**  &mdash; *[Challenge](https://adventofcode.com/2019/day/10)* &mdash; *[JS Code](./day10.js)* &mdash; *C# Code (not available)*
+    - Ray Tracer
+    - Cartesian Geometry (angle calcs)
