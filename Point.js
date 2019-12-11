@@ -64,6 +64,27 @@ class Point {
     }
 
 
+    /**
+     * Returns the Euclidean Distance between two points
+     * @param {Point} a
+     * @param {Point} b Defaults to origin
+     */
+    static EuclideanDistance(a, b = new Point()) {
+        const dx = a.x - b.x,
+            dy = a.y - b.y;
+        return Math.sqrt((dx * dx) + (dy * dy));
+    }
+
+    /**
+     * Returns the angle between two points in degrees
+     * @param {Point} a Reference Point
+     * @param {Point} b 
+     */
+    static AngularDistance(a, b) {
+        const dx = b.x - a.x,
+            dy = b.y - a.y;
+        return Math.atan2(dy,dx)*180/Math.PI;
+    }
 
     toString() {
         return `${this.x},${this.y}`;
