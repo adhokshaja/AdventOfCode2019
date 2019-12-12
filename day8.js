@@ -84,11 +84,9 @@ for(let pixel = 0; pixel<layerSize; pixel++){
 
 const img = imgArr.map(p => {
     if(p===0){
-        return "■" // Black Pixel
+        return " " // Black Pixel
     }else if(p===1){
-        return  "□" // White Pixel
-    }else{
-        return " " // Transparent Pixel
+        return  "■" // White Pixel
     }
 });
 
