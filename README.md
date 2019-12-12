@@ -41,3 +41,8 @@ Repository for [Advent of Code 2019](https://adventofcode.com/2019/about) Advent
 10. Day 10: **_Sensor Boost_**  &mdash; *[Challenge](https://adventofcode.com/2019/day/10)* &mdash; *[JS Code](./day10.js)* &mdash; *C# Code (not available)*
     - Ray Tracer
     - Cartesian Geometry (angle calcs)
+
+11. Day 11: **_Space Police_**  &mdash; *[Challenge](https://adventofcode.com/2019/day/11)* &mdash; *[JS Code](./day11.js)* &mdash; *C# Code (not available)*
+    - Painter Robot 
+    - Unicode characters subsituuted for Black and White Pixels
+    - TODO: C# / LINQPAD code ( Would be interesting to see the Image capabilities of LinqPad's Dump function)
