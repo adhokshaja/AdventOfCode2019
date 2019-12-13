@@ -46,3 +46,8 @@ Repository for [Advent of Code 2019](https://adventofcode.com/2019/about) Advent
     - Painter Robot 
     - Unicode characters subsituuted for Black and White Pixels
     - TODO: C# / LINQPAD code ( Would be interesting to see the Image capabilities of LinqPad's Dump function)
+
+12. Day 12: **_The N-Body Problem_**  &mdash; *[Challenge](https://adventofcode.com/2019/day/12)* &mdash; *[JS Code](./day12.js)* &mdash; *C# Code (not available)*
+    - N-Body Problem, velocity verlet algorithm (lighter version)
+    - Added GCD and LCM calculator functions [in JS](./MathHelpers.js)
+    - TODO: C#/Unity for Viz
