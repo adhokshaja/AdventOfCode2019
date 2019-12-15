@@ -51,3 +51,10 @@ Repository for [Advent of Code 2019](https://adventofcode.com/2019/about) Advent
     - N-Body Problem, velocity verlet algorithm (lighter version)
     - Added GCD and LCM calculator functions [in JS](./MathHelpers.js)
     - TODO: C#/Unity for Viz
+
+
+13. Day 13: **_Care Package_**  &mdash; *[Challenge](https://adventofcode.com/2019/day/13)* &mdash; *[JS Code](./day13.js)* &mdash; *C# Code (not available)*
+    - Arcade machine
+    - Very straight forward Solution
+    - Has some additional fluff in part 1
+    - Can add cool viz for part 2, but not present currently
