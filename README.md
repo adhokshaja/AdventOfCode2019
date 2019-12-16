@@ -58,3 +58,7 @@ Repository for [Advent of Code 2019](https://adventofcode.com/2019/about) Advent
     - Very straight forward Solution
     - Has some additional fluff in part 1
     - Can add cool viz for part 2, but not present currently
+
+14. Day 14: **_Space Stoichiometry_**  &mdash; *[Challenge](https://adventofcode.com/2019/day/14)* &mdash; *[JS Code](./day14.js)* &mdash; *C# Code (not available)*
+    - Fuel Calculations from reactions
+    - Accelerated Search Algorithm - Converges on answers exponentially faster.
